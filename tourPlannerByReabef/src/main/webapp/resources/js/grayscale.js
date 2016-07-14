@@ -177,11 +177,270 @@ function init() {
     map = new google.maps.Map(mapElement, mapOptions);
 
     // Custom Map Marker Icon - Customize the map-marker.png file to customize your icon
-    var image = 'img/map-marker.png';
-    var myLatLng = new google.maps.LatLng(40.6700, -73.9400);
+    /*var image = 'img/map-marker-black.png';*/
+    var myLatLng = new google.maps.LatLng(37.457269, 126.726764);
     var beachMarker = new google.maps.Marker({
         position: myLatLng,
-        map: map,
-        icon: image
+        map: map/*,
+        icon: image*/
     });
+    map.setCenter(new google.maps.LatLng(37.457269, 126.726764))
+    google.maps.event.addDomListener(window,"resize",function()
+    	{
+    	map.setCenter(new google.maps.LatLng(37.457269, 126.726764))
+    	}
+    );
+}
+
+//비밀번호 체크
+function validate() {
+	var inputPwd = $('#inputPwd');
+	var inputPwd2 = $('#inputPwd2');
+	if (inputPwd.val() != inputPwd2.val()) {
+		$('.pwdTitle').text('비밀번호를 확인해주세요')
+		$('.pwdTitle').css('color', 'red');
+		inputPwd2.val('')
+		inputPwd.val('')
+		inputPwd.focus()
+		
+		return false;
+	} else{
+		$('.pwdTitle').text('비밀번호 확인 완료')
+		$('.pwdTitle').css('color', 'white');
+		return true;
+	}
+}
+function checkMid(){
+	var regMid = /^[A-Za-z0-9+]*$/;
+	var mid = $('#inputMid').val();
+	if(mid.length === 0){
+		$('#existId').text('아이디를 입력해주세요');
+		$('#existId').css('color', 'red');
+		$('#inputMid').focus();
+	}else if(!regMid.test($('#inputMid').val())){
+		$('#existId').text('아이디 형식은 영문자, 숫자만으로 이루어지며 4자 이상 12자 이하입니다.');
+		$('#existId').css('color', 'red');
+		$('#inputMid').focus();
+	}else{
+		$.ajax({
+			url:"member/idcheck?mid="+mid,
+			method:"POST",
+			dataType:"text",
+			success:function(data){
+				if(data==="exist"){
+					$('#existId').text('이미 존재하는 아이디입니다.');
+					$('#existId').css('color', 'red');
+					/*$('#existId').css('textShadow', 'black 0 0 0');*/
+					$('#inputMid').focus();
+				}else{
+					$('#existId').text('사용할 수 있는 아이디입니다.')
+					$('#existId').css('color', 'white');
+					/*$('#existId').css('textShadow', '#dce5f5 0 1px 0');*/
+				}
+			}
+		})
+	}
+}
+function checkPwd(){
+	if($('#inputPwd2').val().length > 0){
+		$('#inputPwd').val('');
+		$('#inputPwd2').val('');
+		$('.pwdTitle').text('PASSWORD')
+		$('#pwdTitle2').text('PASSWORD Confirm')
+		$('#existId').css('color', 'white');
+	}
+}
+function checkEmail(){
+	if($('#inputEmail').val().length == 0){
+		$('#emailTitle').text('이메일을 입력해주세요');
+		$('#emailTitle').css('color', 'red');
+		$('#inputEmail').focus();
+	}else if(!regEmail.test($('#inputEmail').val())){
+		$('#emailTitle').text('이메일형식이 알맞지 않습니다.');
+		$('#emailTitle').css('color', 'red');
+		$('#inputEmail').focus();
+	}else{
+		$('#emailTitle').text('이메일 확인 완료.');
+		$('#emailTitle').css('color', 'white');
+	}
+}
+function checkName(){
+	var namePattern = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+	
+	if($('#inputName').val() === 0){
+		$('#nameTitle').text('이름을 확인해주세요')
+		$('#nameTitle').css('color', 'red');
+		$('#inputPwd').focus();
+	}else if(!namePattern.test($('#inputName').val())){
+		$('#nameTitle').text('이름형식이 알맞지 않습니다.')
+		$('#nameTitle').css('color', 'red');
+		$('#inputPwd').focus();
+	}else{
+		$('#nameTitle').text('이름 확인 완료')
+		$('#nameTitle').css('color', 'white');
+ㄴ	}
+}
+$(document).ready(function(){
+	$('#inputMid').focusout(checkMid)
+	
+	$('#inputPwd2').focusout(validate)
+	
+	$('#inputPwd').focus(checkPwd)
+	
+	var regEmail = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	$('#inputEmail').blur(checkEmail)
+	$('#inputName').blur(checkName)
+	$('#loginMid').blur(function(){
+		$('#midTitle').text('ID');
+		$('#midTitle').css('color', 'white');
+	})
+	$('#loginPwd').blur(function(){
+		$('#pwdTitle').text('PASSWORD');
+		$('#pwdTitle').css('color', 'white');
+	})
+})
+$(document).click(function(){
+	$('#messageDiv').fadeOut();
+})
+$(document).scroll(function(){
+	$('#messageDiv').fadeOut();
+})
+
+function formCheck(){
+	if($('#inputMid').val().length == 0){
+		$('#existId').text('아이디를 입력해주세요');
+		$('#existId').css('color', 'red');
+		$('#inputMid').focus();
+		return false;
+	}else if($('#inputPwd2').val().length == 0){
+		$('.pwdTitle').text('비밀번호를 입력해주세요')
+		$('.pwdTitle').css('color', 'red');
+		$('#inputPwd').focus();
+		checkPwd();
+		return false;
+	}else if($('#inputName').val().length == 0){
+		$('#nameTitle').text('이름을 확인해주세요')
+		$('#nameTitle').css('color', 'red');
+		$('#inputName').focus();
+		return false;
+	}else if($('#inputEmail').val().length == 0){
+		$('#emailTitle').text('이메일을 입력해주세요');
+		$('#emailTitle').css('color', 'red');
+		$('#inputEmail').focus();
+		return false;
+	}else{
+		return true;
+	}
+}
+function loginCheck(){
+	if($('#loginMid').val().length === 0){
+		$('#midTitle').text('아이디를 입력해주세요');
+		$('#midTitle').css('color', 'red');
+		return false;
+	}else if($('#loginPwd').val().length === 0){
+		$('#pwdTitle').text('비밀번호를 입력해주세요');
+		$('#pwdTitle').css('color', 'red');
+		return false;
+	}else{
+		return true;
+	}
+}
+function openJoin(){
+	$('#joinSection').show();
+}
+function closeJoin(){
+	$('#joinSection').fadeOut();
+}
+function openLogin(){
+	$('#loginSection').show();
+}
+function closeLogin(){
+	$('#loginSection').fadeOut();
+}
+$(document).ready(function () {
+    $.datepicker.regional['ko'] = {
+        closeText: '닫기',
+        prevText: '이전달',
+        nextText: '다음달',
+        currentText: '오늘',
+        monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+        '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+        '7월','8월','9월','10월','11월','12월'],
+        dayNames: ['일','월','화','수','목','금','토'],
+        dayNamesShort: ['일','월','화','수','목','금','토'],
+        dayNamesMin: ['일','월','화','수','목','금','토'],
+        weekHeader: 'Wk',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 0,
+        isRTL: false,
+        showMonthAfterYear: true,
+        yearSuffix: '',
+        /*showOn: 'both',*/
+        /*buttonText: "달력",*/
+        changeMonth: true,
+        changeYear: true,
+        /*showButtonPanel: true,*/
+        yearRange: 'c-99:c+99',
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ko']);
+ 
+    $('#sdate').datepicker();
+    $('#sdate').datepicker("option", "maxDate", $("#edate").val());
+    $('#sdate').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#edate").datepicker( "option", "minDate", selectedDate );
+    });
+ 
+    $('#edate').datepicker();
+    $('#edate').datepicker("option", "minDate", $("#sdate").val());
+    $('#edate').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#sdate").datepicker( "option", "maxDate", selectedDate );
+    });
+});
+function planCheck(){
+	var sdateArray = $('#sdate').val().split("-");
+	var sdate = new Date(sdateArray[0], Number(sdateArray[1])-1, sdateArray[2]);
+	var edateArray = $('#edate').val().split("-");
+	var edate = new Date(edateArray[0], Number(edateArray[1])-1, edateArray[2]);
+	var period = (edate.getTime() - sdate.getTime())/1000/60/60/24;
+	if(!$('#pName').val().length>0){
+		$('#pNameTitle').css('color','red')
+		$('#pName').focus();
+		return false;
+	}else if(!$('#numPeople').val().length>0){
+		$('#numPeopleTitle').focus();
+		$('#numPeopleTitle').css('color','red')
+		$('#numPeople').focus();
+		return false;
+	}else if(!$('#sdate').val().length>0){
+		$('#sdate').focus();
+		return false;
+	}else if(!$('#edate').val().length>0){
+		$('#edate').focus();
+		return false;
+	}else if(!confirm($('#sdate').val()+" ~ "+$('#edate').val()+" ("+period+"박"+(period+1)+"일)이 맞습니까?")){
+		return false;
+	}else{
+		return true;
+	}
+}
+$(document).ready(function(){
+	$('#pName').blur(function(){
+		$('#pNameTitle').css('color','white');
+	})
+	$('#numPeople').blur(function(){
+		$('#numPeopleTitle').css('color','white');
+	})
+})
+function showKeyCode(event) {
+	event = event || window.event;
+	var keyID = (event.which) ? event.which : event.keyCode;
+	if( ( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 ) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+	{
+		return;
+	}
+	else
+	{
+		return false;
+	}
 }

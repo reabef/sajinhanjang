@@ -67,3 +67,4 @@ atlassian-ide-plugin.xml
 # ---------
 /incoming-distributions
 /intTestHomeDir
+/target/

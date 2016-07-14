@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiwon.tour.mapper.PlanMapper">
+	<insert id="insertPlan" parameterType="com.jiwon.tour.vo.PlanTitle" 
+	 useGeneratedKeys="true" keyProperty="pIdx" keyColumn="pIdx">
+		insert into PLANTITLE(PTYPE, PNAME, NUMPEOPLE, SDATE, EDATE)
+		value (#{pType}, #{pName}, #{numPeople}, #{sdate}, #{edate});
+	</insert>
+	<select id="selectPlan" resultType="com.jiwon.tour.vo.PlanTitle">
+		select * from PLANTITLE where PIDX = #{pIdx}
+	</select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiwon.tour.mapper.MemberMapper">
+ 
+    <!-- id의 경우에는 Mapper.java에 동일하게 사용해야된다. -->
+    <!-- <select id="getMembers" resultMap="MemberResultMap">
+        SELECT * FROM tab_mybatis
+    </select> -->
+    
+    <!-- parameterType 에는 구문에 전달될 파라미터의 패키지 경로를 포함한 전체 클래명이나 별칭이 들어간다  -->
+    <!-- <insert id="insertMember" parameterType="com.test.mybatis.Member" >
+        INSERT INTO tab_mybatis values(#{_name},#{_email},#{_phone})
+    </insert> -->
+    
+    <!-- update와 delete는 생략한다. -->
+    <!-- <update id=""></update>
+    
+    <delete id="deleteMember" parameterType="com.test.mybatis.Member">
+        DELTE tab_mybatis WHERE(name=#{_name})
+    </delete> -->
+    
+ 	<select id="selectMember" parameterType="hashmap" resultType="com.jiwon.tour.vo.Member">
+ 		SELECT * 
+ 		FROM MEMBERS 
+ 		WHERE MID = #{mid}
+ 	</select>
+ 	
+ 	<insert id="insertMember" parameterType="com.jiwon.tour.vo.Member">
+ 		INSERT INTO MEMBERS (MID, NAME, PWD, EMAIL)
+ 		VALUE (#{mid},#{name}, #{pwd}, #{email});
+ 	</insert>
+</mapper>
