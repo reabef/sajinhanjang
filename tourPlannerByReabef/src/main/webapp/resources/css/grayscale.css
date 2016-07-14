@@ -500,14 +500,20 @@ span#addPlanDetail {
 	display: none;
 	word-break: break-all;
 }
-.psIdx {
-    display: none;
+.noVisible{
+	display: none;
 }
-span#removeSchedule {
+span.removeButton {
     color: red;
     cursor: pointer;
     float: right;
 }
 span#removePlanTitle {
     float: right;
+}
+h2.subTitle {
+    margin-top: 2em;
+}
+span#participantList {
+    cursor: pointer;
 }

@@ -6,7 +6,7 @@
 	<insert id="insertPlan" parameterType="com.jiwon.tour.vo.PlanTitle" 
 	 useGeneratedKeys="true" keyProperty="pIdx" keyColumn="pIdx">
 		insert into PLANTITLE(PTYPE, PNAME, NUMPEOPLE, SDATE, EDATE, HOLDER)
-		value (#{pType}, #{pName}, #{numPeople}, #{sdate}, #{edate}, #{holder});
+		value (#{pType}, #{pName}, #{numPeople}, #{sdate}, #{edate}, #{holder})
 	</insert>
 	<select id="selectPlan" resultType="com.jiwon.tour.vo.PlanTitle">
 		select * from PLANTITLE where PIDX = #{pIdx}
@@ -17,14 +17,70 @@
 	
 	<insert id="insertPlanSchdule" parameterType="com.jiwon.tour.vo.PlanSchdule">
 		INSERT INTO PLANSCHDULE(PTIDX, PSDATE, PSPLACE, PSTRANS, PSTIME, PSSCHEDULE, PSREMARK)
-		VALUE(#{ptIdx}, #{psDate},#{psPlace}, #{psTrans}, #{pstime}, #{psSchedule}, #{psRemark});
+		VALUE(#{ptIdx}, #{psDate},#{psPlace}, #{psTrans}, #{pstime}, #{psSchedule}, #{psRemark})
 	</insert>
 	
 	<select id="selectPlanSchdules" resultType="com.jiwon.tour.vo.PlanSchdule">
-		SELECT * FROM PLANSCHDULE WHERE PTIDX = #{ptIdx};
+		SELECT * FROM PLANSCHDULE WHERE PTIDX = #{ptIdx} ORDER BY PSDATE, PSTIME
 	</select>
 	
 	<delete id="deletePlanSchedule" parameterType="Integer">
-		DELETE FROM PLANSCHDULE WHERE PSIDX = #{psIdx};
+		DELETE FROM PLANSCHDULE WHERE PSIDX = #{psIdx}
 	</delete>
+	
+	<insert id="insertPlanTransCost" parameterType="com.jiwon.tour.vo.PlanTransCost">
+		INSERT INTO PLANTRANSCOST(PTIDX, STARTPLACE, STARTTIME, ENDPLACE, ENDTIME, PSTRANS, PTCCOST, PTCREMARK, PSDATE)
+		VALUES (#{ptIdx}, #{startPlace}, #{startTime}, #{endPlace} , #{endTime}, #{psTrans}, #{ptcCost}, #{ptcRemark}, #{psDate})
+	</insert>
+	
+	<select id="selectPlanTransCosts" resultType="com.jiwon.tour.vo.PlanTransCost">
+		SELECT * FROM PLANTRANSCOST WHERE PTIDX = #{ptIdx} ORDER BY PSDATE, STARTTIME
+	</select>
+	
+	<delete id="deletePlanTransCost" parameterType="Integer">
+		DELETE FROM PLANTRANSCOST WHERE PTCIDX = #{ptcIdx}
+	</delete>
+	
+	<insert id="insertPlanStayPlace" parameterType="com.jiwon.tour.vo.PlanStayPlace">
+		INSERT INTO PLANSTAYPLACE(PTIDX, PSDATE, PSPPLACE, PSPSTARTTIME, PSPENDTIME, PSPNAME, PSPCOST, PSPREMARK)
+		VALUES (#{ptIdx}, #{psDate}, #{pspPlace}, #{pspStartTime}, #{pspEndTime}, #{pspName}, #{pspCost}, #{pspRemark})
+	</insert>
+	
+	<select id="selectPlanStayPlaces" resultType="com.jiwon.tour.vo.PlanStayPlace">
+		SELECT * FROM PLANSTAYPLACE WHERE PTIDX = #{ptIdx} ORDER BY PSDATE, PSPSTARTTIME
+	</select>
+	
+	<delete id="deletePlanStayPlace" parameterType="Integer">
+		DELETE FROM PLANSTAYPLACE WHERE PSPIDX = #{pspIdx}
+	</delete>
+	
+	<insert id="insertPlanRequireArticle" parameterType="com.jiwon.tour.vo.PlanRequireArticle">
+		INSERT INTO PLANREQUIREARTICLE(PTIDX, MID, PRAREQUIREARTICLE, PRAREMARK)
+		VALUES(#{ptIdx}, #{mid}, #{praRequireArticle}, #{praRemark})
+	</insert>
+	
+	<select id="selectPlanRequireArticles" resultType="com.jiwon.tour.vo.PlanRequireArticle">
+		SELECT * FROM PLANREQUIREARTICLE WHERE PTIDX = #{ptIdx}
+	</select>
+	
+	<delete id="deletePlanRequireArticle" parameterType="Integer">
+		DELETE FROM PLANREQUIREARTICLE WHERE PRAIDX = #{praIdx}
+	</delete>
+	
+	<insert id="insertPlanParticipant" parameterType="com.jiwon.tour.vo.PlanParticipant">
+		INSERT INTO PLANPARTICIPANT(MID, PTIDX, ppType)
+		VALUES(#{mid}, #{ptIdx}, #{ppType})
+	</insert>
+	
+	<delete id="deletePlanParticipant">
+		DELETE FROM PLANPARTICIPANT WHERE MID = #{mid}
+	</delete>
+	
+	<select id="selectPlanParticipant" resultType="com.jiwon.tour.vo.PlanParticipant">
+		SELECT * FROM PLANPARTICIPANT WHERE PTIDX = #{ptIdx} AND MID = #{mid}
+	</select>
+	
+	<select id="selectPlanParticipants" resultType="com.jiwon.tour.vo.PlanParticipant">
+		SELECT * FROM PLANPARTICIPANT WHERE PTIDX = #{ptIdx}
+	</select>
 </mapper>

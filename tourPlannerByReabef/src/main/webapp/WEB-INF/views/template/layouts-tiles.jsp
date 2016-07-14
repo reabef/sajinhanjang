@@ -51,6 +51,9 @@
 	
 	    <!-- Theme JavaScript -->
 	    <script src="${pageContext.request.contextPath}/resources/js/grayscale.js" type="text/javascript" ></script>
+	    
+	    <!-- Custormize JavaScript -->
+	    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js<tiles:getAsString name="js"/>"></script>
 	</head>
 
 	<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
@@ -62,7 +65,7 @@
 		
 		<tiles:insertAttribute name="join"/>
 		
-		<tiles:insertAttribute name="map"/>
+		<%-- <tiles:insertAttribute name="map"/> --%>
 		
 	    <tiles:insertAttribute name="message"/>
 	   

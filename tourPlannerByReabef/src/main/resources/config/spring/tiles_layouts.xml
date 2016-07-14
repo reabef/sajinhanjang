@@ -19,6 +19,7 @@
 	</definition>
 	<definition name="*/*" extends="layouts-tiles">
 		<put-attribute name="content"   value="/WEB-INF/views/{1}/{2}.jsp" />
+		<put-attribute name="js" value="/{1}/{2}.js"/>
 	</definition>
 	<definition name="*/*/*" extends="layouts-tiles">
 		<put-attribute name="content"   value="/WEB-INF/views/{1}/{2}/{3}.jsp" />

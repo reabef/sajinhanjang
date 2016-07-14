@@ -5,7 +5,7 @@
     <section id="loginSection" class="container content-section text-center"  style="display: none;">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-				<form action="member/login" class="form-container" method="post" onsubmit="return loginCheck();">
+				<form action="${pageContext.request.contextPath}/member/login" class="form-container" method="post" onsubmit="return loginCheck();">
 					<span style="float: right; cursor: pointer;" class="fa fa-times" onclick="closeLogin();"></span>
 					<div style="width:300px;margin: 0 auto">
 						<div class="form-title">

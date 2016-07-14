@@ -4,7 +4,7 @@
     <section id="joinSection" class="container content-section text-center" style="display: none;">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <form action="member/join" class="form-container" method="post" onsubmit="return formCheck();">
+                <form action="${pageContext.request.contextPath}/member/join" class="form-container" method="post" onsubmit="return formCheck();">
                 	<span style="float: right; cursor: pointer;" class="fa fa-times" onclick="closeJoin();"></span>
                 	<div style="width:300px;margin: 0 auto">
 						<div class="form-title">
