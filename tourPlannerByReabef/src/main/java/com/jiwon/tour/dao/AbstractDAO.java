@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jiwon.tour.mapper.MemberMapper;
 
-public class AbstractDAO {
+public class AbstractDAO{
 protected Logger log = Logger.getLogger(AbstractDAO.class);
     
     @Autowired

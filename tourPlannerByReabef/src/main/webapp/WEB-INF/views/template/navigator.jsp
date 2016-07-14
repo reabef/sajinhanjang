@@ -35,10 +35,10 @@
                     <li>
                         <a class="page-scroll" href="${pageContext.request.contextPath }/plan/planReg">Plan-Create</a>
                     </li>
-                     <li>
+                    </c:if>
+                    <li>
                         <a class="page-scroll" href="${pageContext.request.contextPath }/plan/planBook">PlanBook</a>
                     </li>
-                    </c:if>
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>

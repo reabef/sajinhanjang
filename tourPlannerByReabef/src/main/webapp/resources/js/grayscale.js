@@ -301,9 +301,11 @@ $(document).ready(function(){
 })
 $(document).click(function(){
 	$('#messageDiv').fadeOut();
+	$('#messageDivForJS').fadeOut();
 })
 $(document).scroll(function(){
 	$('#messageDiv').fadeOut();
+	$('#messageDivForJS').fadeOut();
 })
 
 function formCheck(){
@@ -424,12 +426,63 @@ function planCheck(){
 		return true;
 	}
 }
+var inputCnt = 0;
 $(document).ready(function(){
 	$('#pName').blur(function(){
 		$('#pNameTitle').css('color','white');
 	})
 	$('#numPeople').blur(function(){
 		$('#numPeopleTitle').css('color','white');
+	})
+	addInputTr();
+	$('#addPlanDetail').click(addInputTr);
+	
+	$('.tableMiddle').hover(
+		function(){
+			/*$('#messageDivForJS').css('display', 'block');*/
+			/*$('#messageDivForJS').fadeIn();
+			$('#messageDivForJS').html('삭제하시려면 클릭해주세요');*/
+		},
+		function(){
+			/*$('#messageDivForJS').css('display', 'none');*/
+			$('#messageDivForJS').fadeOut();
+			$('#messageDivForJS').html('');
+		}
+	);
+	
+	$('.tableMiddle #DBlist > tr').click(function(){
+		//db 리스크 클릭시 수정 부분
+		/*alert('')*/
+		/*alert($('#DBlist > tr').index($(this)))
+		alert($(this).index())*/
+		var psIdx = $(this).children('td').html();
+	})
+	
+	$('.removeSchedule').click(function(){
+		var psIdx = $(this).parent().parent().children('td').html();
+		var thisTr = $(this).parent().parent();
+		if(confirm('해당 일정을 삭제하시겠습니까?')){
+			$.ajax({
+				url:getContextPath()+"/plan/remove?psIdx="+psIdx,
+				method:"POST",
+				dataType:"text",
+				success:function(data){
+					if(data=="success"){
+						thisTr.remove();
+						$('#messageDivForJS').fadeIn();
+						$('#messageDivForJS').html('데이터 삭제 완료하였습니다.');
+					}else{
+						$('#messageDivForJS').fadeIn();
+						$('#messageDivForJS').html('데이터 삭제 실패하였습니다.');
+					}
+				}
+			})
+		}else{
+			
+		}
+	})
+	$('.removePlanTitle').click(function(){
+		alert('아직 구현 안됐어요...')
 	})
 })
 function showKeyCode(event) {
@@ -443,4 +496,44 @@ function showKeyCode(event) {
 	{
 		return false;
 	}
+}
+function addInputTr(){
+	//날짜 연산용
+	var sdateArray = $('#spanSdate').html().split("-");
+	var sdate = new Date(sdateArray[0], Number(sdateArray[1])-1, sdateArray[2]);
+	var edateArray = $('#spanEdate').html().split("-");
+	var edate = new Date(edateArray[0], Number(edateArray[1])-1, edateArray[2]);
+	var period = (edate.getTime() - sdate.getTime())/1000/60/60/24;
+	var ptIdx = $('#pIdx').text();
+	var selectBox = '<select class="form-control detailInput" name="planSchedules['+inputCnt+'].psDate">';
+	for (var i = 1; i <= period+1; i++) {
+		selectBox += '<option value="'+i+'">제'+i+'일차</option>';
+	}
+	selectBox += '</select>';
+	$('.tableMiddle > #inputlist:last').append(	'<tr><td id="dateTd">'+selectBox+'</td>'+
+											'<td id="placeTd"><input class="form-control detailInput" type="text" name="planSchedules['+inputCnt+'].psPlace" placeholder="장소 입력"></td>'+
+									        '<td id="transTd"><input class="form-control detailInput" type="text" name="planSchedules['+inputCnt+'].psTrans" placeholder="교통편 입력"></td>'+
+									        '<td id="timeTd"><input class="form-control detailInput" type="time" name="planSchedules['+inputCnt+'].pstime"></td>'+
+									        '<td id="scheTd"><input class="form-control detailInput" type="text" name="planSchedules['+inputCnt+'].psSchedule" placeholder="일정 입력" style="width:100%;"></td>'+
+									        '<td id="remarkTd"><input class="form-control detailInput" type="text" name="planSchedules['+inputCnt+'].psRemark" placeholder="비고 입력"></td>'+'<tr>'
+									        +'<input type="hidden" name="planSchedules['+inputCnt+'].ptIdx" value="'+ptIdx+'">');
+	inputCnt++;
+	$('.detailInput').keyup(function(){
+		$('#messageDivForJS').show();
+		$('#messageDivForJS').html('현재 입력하는 내용 : <br>'+$(this).val());
+	})
+}
+function regCheck(){
+	if(!confirm('등록하시겠습니까?')){
+		return false;
+	}else{
+		return true;
+	}
+	
+}
+
+function getContextPath(){
+    var offset=location.href.indexOf(location.host)+location.host.length;
+    var ctxPath=location.href.substring(offset,location.href.indexOf('/',offset+1));
+    return ctxPath;
 }

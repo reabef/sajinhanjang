@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">TourPlanner</h1>
+                        <h1 class="brand-heading">TourPlan</h1>
                         <p class="intro-text">Create Your TourPlan</p>
                         <ul class="list-inline banner-social-buttons">
 	                    <c:if test="${empty sessionScope.mid}">
@@ -28,13 +28,13 @@
 	                        <span class="network-name">Plan-create</span>
 	                        </a>
 	                    </li>
+	                    </c:if>
 	                    <li>
 	                        <a href="${pageContext.request.contextPath }/plan/planBook" class="btn btn-default btn-lg">
 	                        <i class="fa fa-book"></i> 
 	                        <span class="network-name">OpenPlanBook</span>
 	                        </a>
 	                    </li>
-	                    </c:if>
                 		</ul>
                     </div>
                 </div>

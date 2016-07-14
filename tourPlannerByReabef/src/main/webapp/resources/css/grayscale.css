@@ -444,5 +444,70 @@ div#messageDiv {
     border-radius: 5px;
     width: 280px;
     /* margin: 0 auto; */
+}
+table.table.table-bordered.tableMiddle {
+	margin-bottom: 0;
+}
+table.table.table-bordered.tableMiddle tr:hover {
+	background-color: gray;
+}
+.tourListDiv {
+    border: 1px solid white;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+}
 
+.tableMiddle th:nth-child(5) {
+}
+.tableMiddle td:nth-child(5) {
+}
+.tableTop th {
+    text-align: center;
+}
+.tableMiddle th {
+    text-align: center;
+}
+.col-lg-12.planDiv {
+    padding-top: 3em;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    /* overflow: scroll; */
+}
+span.spanButton {
+    float: right;
+    cursor: pointer;
+}
+.detailInput {
+    background-color: gray;
+    color: white;
+}
+span#addPlanDetail {
+}
+#messageDivForJS{
+	max-width: 90%;
+	/* width: 15em; */
+    /* height: 3.3em; */
+    /* position: static; */
+    z-index: 1040;
+    background-color: rgba(4, 4, 4, 0.8);
+    float: right;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 1em;
+	display: none;
+	word-break: break-all;
+}
+.psIdx {
+    display: none;
+}
+span#removeSchedule {
+    color: red;
+    cursor: pointer;
+    float: right;
+}
+span#removePlanTitle {
+    float: right;
 }

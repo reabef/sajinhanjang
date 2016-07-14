@@ -7,6 +7,7 @@ public class PlanTitle {
 	private int numPeople;
 	private String sdate;
 	private String edate;
+	private String holder;
 	
 	public int getpIdx() {
 		return pIdx;
@@ -44,6 +45,13 @@ public class PlanTitle {
 	public void setEdate(String edate) {
 		this.edate = edate;
 	}
+	public String getHolder() {
+		return holder;
+	}
+	public void setHolder(String holder) {
+		this.holder = holder;
+	}
+	
 	
 	
 }

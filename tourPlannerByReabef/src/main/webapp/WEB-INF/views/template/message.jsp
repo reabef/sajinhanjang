@@ -4,3 +4,4 @@
 <c:if test="${!empty message}">
 	<div id="messageDiv">${message }</div>
 </c:if>
+<div id="messageDivForJS"></div>

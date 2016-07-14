@@ -30,6 +30,7 @@
 							<span style="float:left;padding-left: 1em;">종료일 :</span> <input class="form-field" type="text" name="edate" id="edate" size="10" maxlength="10" value="" placeholder="클릭하시면 달력이 나옵니다"/>
 			            </div>
 						<div class="submit-container">
+							<input type="hidden" name="mid" value="${sessionScope.mid}">
 							<input class="submit-button" type="submit" value="등록" />
 						</div>
 					</div>
