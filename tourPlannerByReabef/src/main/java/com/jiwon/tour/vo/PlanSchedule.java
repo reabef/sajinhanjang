@@ -1,6 +1,6 @@
 package com.jiwon.tour.vo;
 
-public class PlanSchdule {
+public class PlanSchedule {
 	private int ptIdx;
 	private int psIdx;
 	private int psDate;

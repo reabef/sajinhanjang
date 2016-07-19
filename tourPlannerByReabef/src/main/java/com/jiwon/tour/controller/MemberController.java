@@ -20,7 +20,7 @@ import com.jiwon.tour.service.MemberService;
 import com.jiwon.tour.vo.Member;
 
 @Controller
-@RequestMapping("/member/")
+@RequestMapping("/member")
 public class MemberController {
 	
 	private Logger log = Logger.getLogger(MemberController.class);
@@ -55,7 +55,7 @@ public class MemberController {
 	@RequestMapping(value="join", method=RequestMethod.POST)
 	private String join(RedirectAttributes attr, HttpServletRequest request, Member m){
 		String referer = request.getHeader("referer");
-		String contextPath=request.getContextPath();
+		//String contextPath=request.getContextPath();
 		String referView = referer.split(contextPath)[1];
 		log.debug("이름 : " +m.getName());
 		int iv = memberService.joinMember(m);
@@ -70,7 +70,7 @@ public class MemberController {
 	@RequestMapping(value="login", method=RequestMethod.POST)
 	private String login(HttpServletRequest request, RedirectAttributes attr, Member m){
 		String referer = request.getHeader("referer");
-		String contextPath=request.getContextPath();
+		//String contextPath=request.getContextPath();
 		String referView = referer.split(contextPath)[1];
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -90,7 +90,7 @@ public class MemberController {
 	@RequestMapping(value="logout", method=RequestMethod.GET)
 	private String logout(HttpServletRequest request){
 		String referer = request.getHeader("referer");
-		String contextPath=request.getContextPath();
+		//String contextPath=request.getContextPath();
 		String referView = referer.split(contextPath)[1];
 		
 		request.getSession().removeAttribute("mid");

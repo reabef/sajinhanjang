@@ -12,6 +12,7 @@
 		<put-attribute name="login"     value="/WEB-INF/views/template/login.jsp" />
 		<put-attribute name="message"   value="/WEB-INF/views/template/message.jsp" />
 		<put-attribute name="map"       value="/WEB-INF/views/template/map.jsp"/>
+		<put-attribute name="js"        value=""/>
 	</definition>
 	 
 	<definition name="*" extends="layouts-tiles">

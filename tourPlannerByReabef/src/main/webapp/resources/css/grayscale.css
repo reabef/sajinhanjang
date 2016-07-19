@@ -517,3 +517,15 @@ h2.subTitle {
 span#participantList {
     cursor: pointer;
 }
+tr.editTr {
+    border: 3px solid;
+}
+span#removeEdit {
+    float: right;
+    color: purple;
+}
+#editSubmit{
+	padding: 0;
+    padding-left: 10%;
+    padding-right: 10%;
+}

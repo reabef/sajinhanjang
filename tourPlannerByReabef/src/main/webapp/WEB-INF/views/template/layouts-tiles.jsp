@@ -65,8 +65,6 @@
 		
 		<tiles:insertAttribute name="join"/>
 		
-		<%-- <tiles:insertAttribute name="map"/> --%>
-		
 	    <tiles:insertAttribute name="message"/>
 	   
 		<tiles:insertAttribute name="footer"/>

@@ -15,17 +15,17 @@
 		select * from PLANTITLE
 	</select>
 	
-	<insert id="insertPlanSchdule" parameterType="com.jiwon.tour.vo.PlanSchdule">
-		INSERT INTO PLANSCHDULE(PTIDX, PSDATE, PSPLACE, PSTRANS, PSTIME, PSSCHEDULE, PSREMARK)
+	<insert id="insertPlanSchedule" parameterType="com.jiwon.tour.vo.PlanSchedule">
+		INSERT INTO PLANSCHEDULE(PTIDX, PSDATE, PSPLACE, PSTRANS, PSTIME, PSSCHEDULE, PSREMARK)
 		VALUE(#{ptIdx}, #{psDate},#{psPlace}, #{psTrans}, #{pstime}, #{psSchedule}, #{psRemark})
 	</insert>
 	
-	<select id="selectPlanSchdules" resultType="com.jiwon.tour.vo.PlanSchdule">
-		SELECT * FROM PLANSCHDULE WHERE PTIDX = #{ptIdx} ORDER BY PSDATE, PSTIME
+	<select id="selectPlanSchedules" resultType="com.jiwon.tour.vo.PlanSchedule">
+		SELECT * FROM PLANSCHEDULE WHERE PTIDX = #{ptIdx} ORDER BY PSDATE, PSTIME
 	</select>
 	
 	<delete id="deletePlanSchedule" parameterType="Integer">
-		DELETE FROM PLANSCHDULE WHERE PSIDX = #{psIdx}
+		DELETE FROM PLANSCHEDULE WHERE PSIDX = #{psIdx}
 	</delete>
 	
 	<insert id="insertPlanTransCost" parameterType="com.jiwon.tour.vo.PlanTransCost">
@@ -83,4 +83,21 @@
 	<select id="selectPlanParticipants" resultType="com.jiwon.tour.vo.PlanParticipant">
 		SELECT * FROM PLANPARTICIPANT WHERE PTIDX = #{ptIdx}
 	</select>
+	
+	<insert id="insertPlanFoodCost" parameterType="com.jiwon.tour.vo.PlanFoodCost">
+		INSERT INTO PLANFOODCOST(PSDATE, PFCTIME, PFCCONTENT, PFCCOST, PFCREMARK, PTIDX)
+		VALUES(#{psDate}, #{pfcTime}, #{pfcContent}, #{pfcCost}, #{pfcRemark}, #{ptIdx})
+	</insert>
+	
+	<select id="selectPlanFoodCosts" resultType="com.jiwon.tour.vo.PlanFoodCost">
+		SELECT * FROM PLANFOODCOST WHERE PTIDX = #{ptIdx}
+	</select>
+	
+	<delete id="deletePlanFoodCost" parameterType="Integer">
+		DELETE FROM PLANFOODCOST WHERE PFCIDX = #{pfcIdx}
+	</delete>
+	
+	<update id="updateVariable" parameterType="com.jiwon.tour.vo.EditData">
+		update ${tableName} set ${column}=${content} where ${idxName}=#{idx};
+	</update>
 </mapper>

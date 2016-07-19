@@ -10,9 +10,11 @@ import com.google.gson.Gson;
 import com.jiwon.tour.config.MyBatisSupport;
 import com.jiwon.tour.config.MyBatisTransactionManager;
 import com.jiwon.tour.dao.PlanDAO;
+import com.jiwon.tour.vo.EditData;
+import com.jiwon.tour.vo.PlanFoodCost;
 import com.jiwon.tour.vo.PlanParticipant;
 import com.jiwon.tour.vo.PlanRequireArticle;
-import com.jiwon.tour.vo.PlanSchdule;
+import com.jiwon.tour.vo.PlanSchedule;
 import com.jiwon.tour.vo.PlanStayPlace;
 import com.jiwon.tour.vo.PlanTitle;
 import com.jiwon.tour.vo.PlanTransCost;
@@ -48,15 +50,15 @@ public class PlanServiceImpl extends MyBatisSupport implements PlanService {
 		return pts;
 	}
 
-	@Override
-	public int regPlanSchdule(List<PlanSchdule> pslist) {
+	/*@Override
+	public int regPlanSchdule(List<PlanSchedule> pslist, String tableName) {
 		// TODO Auto-generated method stub
 		MyBatisTransactionManager transaction = getTransactionManager();
 		int iv=0;
 		try{
 			transaction.start();
-			for (PlanSchdule planSchdule : pslist) {
-				iv = planDAO.regPlanSchdule(planSchdule);
+			for (PlanSchedule planSchdule : pslist) {
+				iv = planDAO.regPlanVariables(planSchdule, tableName);
 			}
 			transaction.commit();
 		}catch(Exception e){
@@ -65,29 +67,29 @@ public class PlanServiceImpl extends MyBatisSupport implements PlanService {
 			transaction.end();
 		}
 		return iv;
-	}
+	}*/
 
 	@Override
-	public List<PlanSchdule> getPlanSchedules(int ptIdx) {
+	public List<PlanSchedule> getPlanSchedules(int ptIdx) {
 		// TODO Auto-generated method stub
 		return planDAO.getPlanSchedules(ptIdx);
 	}
 
-	@Override
+	/*@Override
 	public int removePlanSchdule(int ivPsIdx) {
 		// TODO Auto-generated method stub
 		return planDAO.removePlanSchedule(ivPsIdx);
-	}
+	}*/
 
-	@Override
-	public int regPlanTransCost(List<PlanTransCost> ptclist) {
+	/*@Override
+	public int regPlanTransCost(List<PlanTransCost> ptclist, String tableName) {
 		// TODO Auto-generated method stub
 		MyBatisTransactionManager transaction = getTransactionManager();
 		int iv = 0;
 		try{
 			transaction.start();
-			for (PlanTransCost planTransCost : ptclist) {
-				iv = planDAO.regPlanTransCost(planTransCost);
+			for (Object object : ptclist) {
+				iv = planDAO.regPlanVariables(object, tableName);
 			}
 			transaction.commit();
 		}catch(Exception e){
@@ -97,7 +99,7 @@ public class PlanServiceImpl extends MyBatisSupport implements PlanService {
 		}
 		
 		return iv;
-	}
+	}*/
 
 	@Override
 	public List<PlanTransCost> getPlanTransCosts(int ptIdx) {
@@ -105,13 +107,13 @@ public class PlanServiceImpl extends MyBatisSupport implements PlanService {
 		return planDAO.getPlanTransCosts(ptIdx);
 	}
 
-	@Override
+	/*@Override
 	public int removePlanTransCost(int ivPtcIdx) {
 		// TODO Auto-generated method stub
 		return planDAO.removePlanTransCost(ivPtcIdx);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int regPlanStayPlace(List<PlanStayPlace> psplist) {
 		// TODO Auto-generated method stub
 		MyBatisTransactionManager transaction = getTransactionManager();
@@ -129,7 +131,7 @@ public class PlanServiceImpl extends MyBatisSupport implements PlanService {
 		}
 		
 		return iv;
-	}
+	}*/
 
 	@Override
 	public List<PlanStayPlace> getPlanStayPlaces(int ptIdx) {
@@ -137,17 +139,17 @@ public class PlanServiceImpl extends MyBatisSupport implements PlanService {
 		return planDAO.getPlanStayPlaces(ptIdx);
 	}
 
-	@Override
+	/*@Override
 	public int removePlanStayPlace(int ivPspIdx) {
 		// TODO Auto-generated method stub
 		return planDAO.removePlanStayPlace(ivPspIdx);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int regPlanRequireArticle(PlanRequireArticle ra) {
 		// TODO Auto-generated method stub
 		return planDAO.regPlanRequireArticle(ra);
-	}
+	}*/
 
 	@Override
 	public List<PlanRequireArticle> getPlanRequireArticle(int ptIdx) {
@@ -155,11 +157,11 @@ public class PlanServiceImpl extends MyBatisSupport implements PlanService {
 		return planDAO.getPlanRequireArticles(ptIdx);
 	}
 
-	@Override
+	/*@Override
 	public int removePlanRequireArticle(int ivPraIdx) {
 		// TODO Auto-generated method stub
 		return planDAO.removePlanRequireArticle(ivPraIdx);
-	}
+	}*/
 
 	@Override
 	public int planParticipantReg(PlanParticipant pp) {
@@ -189,5 +191,51 @@ public class PlanServiceImpl extends MyBatisSupport implements PlanService {
 			log.debug(e.getMessage());
 		}
 		return pps;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public int regPlanVariables(List list, String tableName) {
+		// TODO Auto-generated method stub
+		MyBatisTransactionManager transaction = getTransactionManager();
+		int iv = 0;
+		try{
+			transaction.start();
+			for (Object object : list) {
+				iv = planDAO.regPlanVariables(object, tableName);
+			}
+			transaction.commit();
+		}catch(Exception e){
+			iv = 0;
+		}finally{
+			transaction.end();
+		}
+		
+		return iv;
+	}
+
+	@Override
+	public int regPlanVariable(Object object, String tableName) {
+		// TODO Auto-generated method stub
+		return planDAO.regPlanVariables(object, tableName);
+	}
+	
+	@SuppressWarnings({ "rawtypes" })
+	@Override
+	public List getPlanVariables(int ptIdx, String tableName) {
+		// TODO Auto-generated method stub
+		return planDAO.getPlanVariables(ptIdx, tableName);
+	}
+	
+	@Override
+	public int removePlanVariable(int ivIdx, String tableName) {
+		// TODO Auto-generated method stub
+		return planDAO.removePlanVariable(ivIdx, tableName);
+	}
+	
+	@Override
+	public int editPlanVariable(EditData ed) {
+		// TODO Auto-generated method stub
+		return planDAO.editPlanVariable(ed);
 	}
 }

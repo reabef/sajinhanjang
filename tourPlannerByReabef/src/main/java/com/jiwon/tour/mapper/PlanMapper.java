@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.jiwon.tour.vo.EditData;
+import com.jiwon.tour.vo.PlanFoodCost;
 import com.jiwon.tour.vo.PlanParticipant;
 import com.jiwon.tour.vo.PlanRequireArticle;
-import com.jiwon.tour.vo.PlanSchdule;
+import com.jiwon.tour.vo.PlanSchedule;
 import com.jiwon.tour.vo.PlanStayPlace;
 import com.jiwon.tour.vo.PlanTitle;
 import com.jiwon.tour.vo.PlanTransCost;
@@ -19,9 +21,9 @@ public interface PlanMapper {
 	
 	public List<PlanTitle> selectPlans();
 	
-	public int insertPlanSchdule(PlanSchdule planSchdule);
+	public int insertPlanSchdule(PlanSchedule planSchdule);
 	
-	public List<PlanSchdule> selectPlanSchdules(@Param("ptIdx") int ptIdx);
+	public List<PlanSchedule> selectPlanSchdules(@Param("ptIdx") int ptIdx);
 	
 	public int deletePlanSchedule(@Param("psIdx") int ivPsIdx);
 	
@@ -50,4 +52,13 @@ public interface PlanMapper {
 	public PlanParticipant selectPlanParticipant(PlanParticipant pp);
 	
 	public List<PlanParticipant> selectPlanParticipants(int ptIdx);
+	
+	public int insertPlanFoodCost(PlanFoodCost planFoodCost);
+	
+	@SuppressWarnings("rawtypes")
+	public List selectPlanFoodCosts(@Param("ptIdx") int ptIdx, String tableName);
+	
+	public int deletePlanFoodCost(@Param("pfcIdx") int pfcIdx);
+	
+	public int updateVariable(EditData ed);
 }

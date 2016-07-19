@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.jiwon.tour.vo.EditData;
+import com.jiwon.tour.vo.PlanFoodCost;
 import com.jiwon.tour.vo.PlanParticipant;
 import com.jiwon.tour.vo.PlanRequireArticle;
-import com.jiwon.tour.vo.PlanSchdule;
+import com.jiwon.tour.vo.PlanSchedule;
 import com.jiwon.tour.vo.PlanStayPlace;
 import com.jiwon.tour.vo.PlanTitle;
 import com.jiwon.tour.vo.PlanTransCost;
@@ -33,15 +35,15 @@ public class PlanDAO extends AbstractDAO{
 		return (List<PlanTitle>) selectList("com.jiwon.tour.mapper.PlanMapper.selectPlans");
 	}
 
-	public int regPlanSchdule(PlanSchdule planSchdule) {
+	public int regPlanSchdule(PlanSchedule planSchedule) {
 		// TODO Auto-generated method stub
-		return (Integer) insert("com.jiwon.tour.mapper.PlanMapper.insertPlanSchdule", planSchdule);
+		return (Integer) insert("com.jiwon.tour.mapper.PlanMapper.insertPlanSchedule", planSchedule);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PlanSchdule> getPlanSchedules(int ptIdx) {
+	public List<PlanSchedule> getPlanSchedules(int ptIdx) {
 		// TODO Auto-generated method stub
-		return (List<PlanSchdule>)selectList("com.jiwon.tour.mapper.PlanMapper.selectPlanSchdules", ptIdx);
+		return (List<PlanSchedule>)selectList("com.jiwon.tour.mapper.PlanMapper.selectPlanSchedules", ptIdx);
 	}
 
 	public int removePlanSchedule(int ivPsIdx) {
@@ -118,4 +120,24 @@ public class PlanDAO extends AbstractDAO{
 		return (List<PlanParticipant>) selectList("com.jiwon.tour.mapper.PlanMapper.selectPlanParticipants", ptIdx);
 	}
 
+	public int regPlanVariables(Object object, String tableName) {
+		// TODO Auto-generated method stub
+		return (Integer) insert("com.jiwon.tour.mapper.PlanMapper.insert"+tableName, object);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List getPlanVariables(int ptIdx, String tableName) {
+		// TODO Auto-generated method stub
+		return selectList("com.jiwon.tour.mapper.PlanMapper.select"+tableName+"s", ptIdx);
+	}
+
+	public int removePlanVariable(int ivIdx, String tableName) {
+		// TODO Auto-generated method stub
+		return (Integer) delete("com.jiwon.tour.mapper.PlanMapper.delete"+tableName, ivIdx);
+	}
+
+	public int editPlanVariable(EditData ed) {
+		// TODO Auto-generated method stub
+		return (Integer) update("com.jiwon.tour.mapper.PlanMapper.updateVariable", ed);
+	}
 }
