@@ -493,7 +493,7 @@ span#addPlanDetail {
     float: right;
     position: fixed;
     right: 20px;
-    bottom: 20px;
+    top: 50px;
     border: 1px solid gray;
     border-radius: 3px;
     padding: 1em;

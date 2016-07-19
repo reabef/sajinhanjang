@@ -136,6 +136,7 @@
 						</tr>
 					</thead>
 					<tbody id="DBlist">
+						<c:set var="sumTransCost" value="0"></c:set>
 						<c:forEach items="${ptc}" var="ptc" varStatus="status">
 							<tr>
 								<td class="noVisible ptcIdx"><c:out value="${ptc.ptcIdx }"/></td>
@@ -147,14 +148,22 @@
 								<td id="psTransTd"><c:out value="${ptc.psTrans }"/></td>
 								<td id="ptcCostTd"><c:out value="${ptc.ptcCost }원"/></td>
 								<td id="ptcRemarkTd"><c:out value="${ptc.ptcRemark }"/>
+								<c:set var="sumTransCost" value="${sumTransCost+ptc.ptcCost}"></c:set>
 								<c:if test="${ppBoolean==true }">
 								<span class="fa fa-times-circle-o removeButton removeTransCost" id="removeTransCost" onclick="event.cancelBubble=true;"></span>
 								</c:if>
 								</td>
 							</tr>
 						</c:forEach>
+						
 					</tbody>
 					<tbody id="inputlist">
+					</tbody>
+					<tbody id="sumTransCost">
+						<tr>
+							<td colspan="3">비용 합계</td>
+							<td colspan="6"><c:out value="총 ${sumTransCost}원"/></td>
+						</tr>
 					</tbody>
 				</table>
 				<c:if test="${ppBoolean==true }">
@@ -170,6 +179,51 @@
 						<li style="float: right; display: inline;">
 							<button type="button" class="btn btn-default btn-lg">
 								<span id="addTransCost" class="network-name">입력창 추가</span>
+							</button>
+						</li>
+					</ul>
+				</div>
+				</c:if>
+				</form>
+				<form action="${pageContext.request.contextPath}/plan/planFoodCostReg" method="post" onsubmit="return regCheck();">
+				<h2 class="subTitle">식비 정리</h2>
+				<hr>
+				<table class="table table-bordered tableMiddle" id="foodCost">
+					<thead>
+						<tr>
+							<th class="noVisible pfcIdx"></th>
+							<th>구매 날짜</th>
+							<th>구매 시간</th>
+							<th>구매 내역</th>
+							<th>비용</th>
+							<th>비고</th>
+						</tr>
+					</thead>
+					<tbody id="DBlist">
+						<c:set var="sumFoodCost" value="0"></c:set>
+					</tbody>
+					<tbody id="inputlist">
+					</tbody>
+					<tbody id="sumFoodCost">
+						<tr>
+							<td colspan="3">비용 합계</td>
+							<td colspan="4"><c:out value="총 ${sumFoodCost}원"/></td>
+						</tr>
+					</tbody>
+				</table>
+				<c:if test="${ppBoolean==true }">
+				<div
+					style="overflow: auto; padding-top: 0.5em; padding-bottom: 1em;">
+					<!-- <span id="submitPlanDetail" class="spanButton">[등록]</span><span id="addPlanDetail" class="spanButton">[입력창 추가]</span> -->
+					<ul style="list-style-type: none;">
+						<li style="float: right; display: inline;">
+							<button type="submit" id="foodCostSubmit" class="btn btn-default btn-lg submitButton" style="">
+								<span id="foodCostSubmit" class="network-name">등록</span>
+							</button>
+						</li>
+						<li style="float: right; display: inline;">
+							<button type="button" class="btn btn-default btn-lg">
+								<span id="addFoodCost" class="network-name">입력창 추가</span>
 							</button>
 						</li>
 					</ul>
@@ -193,6 +247,7 @@
 						</tr>
 					</thead>
 					<tbody id="DBlist">
+						<c:set var="sumStayCost" value="0"></c:set>
 						<c:forEach items="${psp}" var="psp" varStatus="status">
 							<tr>
 								<td class="noVisible pspIdx"><c:out value="${psp.pspIdx }"/></td>
@@ -203,14 +258,22 @@
 								<td id="pspNameTd"><c:out value="${psp.pspName }"/></td>
 								<td id="pspCostTd"><c:out value="${psp.pspCost }원"/></td>
 								<td id="pspRemarkTd"><c:out value="${psp.pspRemark }"/>
+								<c:set var="sumStayCost" value="${sumStayCost+ psp.pspCost}"></c:set>
 								<c:if test="${ppBoolean==true }">
 								<span class="fa fa-times-circle-o removeButton removeStayPlace" id="removeStayPlace" onclick="event.cancelBubble=true;"></span>
 								</c:if>
 								</td>
 							</tr>
 						</c:forEach>
+						
 					</tbody>
 					<tbody id="inputlist">
+					</tbody>
+					<tbody id="sumStayCost">
+						<tr>
+							<td colspan="3">비용 합계</td>
+							<td colspan="4"><c:out value="총 ${sumStayCost}원"/></td>
+						</tr>
 					</tbody>
 				</table>
 				<c:if test="${ppBoolean==true }">

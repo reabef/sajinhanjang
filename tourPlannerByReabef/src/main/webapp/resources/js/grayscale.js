@@ -429,6 +429,7 @@ function planCheck(){
 var inputCnt = 0;
 var inputCntTransCost = 0;
 var inputCntStayPlace = 0;
+var inputCntFoodCost = 0;
 $(document).ready(function(){
 	$('#pName').blur(function(){
 		$('#pNameTitle').css('color','white');
@@ -464,7 +465,7 @@ $(document).ready(function(){
 		var thisTr = $(this).parent().parent();
 		if(confirm('해당 일정을 삭제하시겠습니까?')){
 			$.ajax({
-				url:getContextPath()+"/plan/remove?psIdx="+psIdx,
+				url:"../plan/remove?psIdx="+psIdx,
 				method:"POST",
 				dataType:"text",
 				success:function(data){
@@ -524,8 +525,8 @@ function addInputTr(){
 										        '<td id="transTd"><input class="form-control detailInput" type="text" name="planSchedules['+inputCnt+'].psTrans" placeholder="교통편 입력"></td>'+
 										        '<td id="timeTd"><input class="form-control detailInput" type="time" name="planSchedules['+inputCnt+'].pstime"></td>'+
 										        '<td id="scheTd"><input class="form-control detailInput" type="text" name="planSchedules['+inputCnt+'].psSchedule" placeholder="일정 입력" style="width:100%;"></td>'+
-										        '<td id="remarkTd"><input class="form-control detailInput" type="text" name="planSchedules['+inputCnt+'].psRemark" placeholder="비고 입력"><span class="fa fa-times-circle-o removeInput" id="removeInput'+inputCnt+'" onclick="event.cancelBubble=true;"></td>'+'<tr>'
-										        +'<input type="hidden" name="planSchedules['+inputCnt+'].ptIdx" value="'+ptIdx+'">');
+										        '<td id="remarkTd"><input class="form-control detailInput" type="text" name="planSchedules['+inputCnt+'].psRemark" placeholder="비고 입력"><span class="fa fa-times-circle-o removeInput" id="removeInput'+inputCnt+'" onclick="event.cancelBubble=true;"></td>'
+										        +'<input type="hidden" name="planSchedules['+inputCnt+'].ptIdx" value="'+ptIdx+'">'+'<tr>');
 		
 		$('.detailInput').keyup(function(){
 			$('#messageDivForJS').show();
@@ -555,7 +556,7 @@ function regCheck(){
 function getContextPath(){
     var offset=location.href.indexOf(location.host)+location.host.length;
     var ctxPath=location.href.substring(offset,location.href.indexOf('/',offset+1));
-    return ctxPath;
+    return null;
 }
 function addInputTrTransCost(){
 	if($('#detailSchedule').children('#inputlist').text().length>6){
@@ -583,8 +584,8 @@ function addInputTrTransCost(){
 		        '<td id="transTd"><input class="form-control detailInput" type="text" name="planTransCosts['+inputCntTransCost+'].psTrans" placeholder="교통편 입력"></td>'+
 		        
 		        '<td id="scheTd"><input class="form-control detailInput" type="text" name="planTransCosts['+inputCntTransCost+'].ptcCost" placeholder="비용 입력"></td>'+
-		        '<td id="remarkTd"><input class="form-control detailInput" type="text" name="planTransCosts['+inputCntTransCost+'].ptcRemark" placeholder="비고 입력"><span class="fa fa-times-circle-o removeInput" id="removeInput'+inputCntTransCost+'" onclick="event.cancelBubble=true;"></td>'+'<tr>'
-		        +'<input type="hidden" name="planTransCosts['+inputCntTransCost+'].ptIdx" value="'+ptIdx+'">');
+		        '<td id="remarkTd"><input class="form-control detailInput" type="text" name="planTransCosts['+inputCntTransCost+'].ptcRemark" placeholder="비고 입력"><span class="fa fa-times-circle-o removeInput" id="removeInput'+inputCntTransCost+'" onclick="event.cancelBubble=true;"></td>'
+		        +'<input type="hidden" name="planTransCosts['+inputCntTransCost+'].ptIdx" value="'+ptIdx+'">'+'<tr>');
 		$('.detailInput').keyup(function(){
 			$('#messageDivForJS').show();
 			$('#messageDivForJS').html('현재 입력하는 내용 : <br>'+$(this).val());
@@ -627,7 +628,7 @@ $(document).ready(function(){
 		var thisTr = $(this).parent().parent();
 		if(confirm('해당 비용을 삭제하시겠습니까?')){
 			$.ajax({
-				url:getContextPath()+"/plan/remove?ptcIdx="+ptcIdx,
+				url:"../plan/remove?ptcIdx="+ptcIdx,
 				method:"POST",
 				dataType:"text",
 				success:function(data){
@@ -671,8 +672,8 @@ function addInputTrStayPlace(){
 				'<td id="pspEndTimeTd"><input class="form-control detailInput" type="time" name="planStayPlaces['+inputCntStayPlace+'].pspEndTime"></td>'+
 				'<td id="pspNameTd"><input class="form-control detailInput" type="text" name="planStayPlaces['+inputCntStayPlace+'].pspName" placeholder="장소 이름 입력"></td>'+
 		        '<td id="pspCostTd"><input class="form-control detailInput" type="text" name="planStayPlaces['+inputCntStayPlace+'].pspCost" placeholder="비용 입력"></td>'+
-		        '<td id="pspRemarkTd"><input class="form-control detailInput" type="text" name="planStayPlaces['+inputCntStayPlace+'].pspRemark" placeholder="비고 입력"><span class="fa fa-times-circle-o removeInput" id="removeInput'+inputCntStayPlace+'" onclick="event.cancelBubble=true;"></td>'+'<tr>'
-		        +'<input type="hidden" name="planStayPlaces['+inputCntStayPlace+'].ptIdx" value="'+ptIdx+'">');
+		        '<td id="pspRemarkTd"><input class="form-control detailInput" type="text" name="planStayPlaces['+inputCntStayPlace+'].pspRemark" placeholder="비고 입력"><span class="fa fa-times-circle-o removeInput" id="removeInput'+inputCntStayPlace+'" onclick="event.cancelBubble=true;"></td>'
+		        +'<input type="hidden" name="planStayPlaces['+inputCntStayPlace+'].ptIdx" value="'+ptIdx+'">'+'<tr>');
 		$('.detailInput').keyup(function(){
 			$('#messageDivForJS').show();
 			$('#messageDivForJS').html('현재 입력하는 내용 : <br>'+$(this).val());
@@ -710,7 +711,7 @@ $(document).ready(function(){
 		var thisTr = $(this).parent().parent();
 		if(confirm('해당 숙박 정보를 삭제하시겠습니까?')){
 			$.ajax({
-				url:getContextPath()+"/plan/remove?pspIdx="+pspIdx,
+				url:"../plan/remove?pspIdx="+pspIdx,
 				method:"POST",
 				dataType:"text",
 				success:function(data){
@@ -733,7 +734,7 @@ $(document).ready(function(){
 		var thisTr = $(this).parent().parent();
 		if(confirm('해당 물품 정보를 삭제하시겠습니까?')){
 			$.ajax({
-				url:getContextPath()+"/plan/remove?praIdx="+praIdx,
+				url:"../plan/remove?praIdx="+praIdx,
 				method:"POST",
 				dataType:"text",
 				success:function(data){
@@ -760,7 +761,7 @@ $(document).ready(function(){
 function getPlanParticipants(){
 	var ptIdx = $('#pIdx').text();
 	$.ajax({
-		url:getContextPath()+"/plan/planParticipantGets?ptIdx="+ptIdx,
+		url:"../plan/planParticipantGets?ptIdx="+ptIdx,
 			method:"POST",
 			dataType:"JSON",
 			success:function(data){
@@ -780,7 +781,7 @@ function regPlanParticipant(){
 	var ptIdx = $('#pIdx').text();
 	if(confirm('참여하시겠습니까?')){
 		$.ajax({
-			url:getContextPath()+"/plan/planParticipantReg?ptIdx="+ptIdx,
+			url:"../plan/planParticipantReg?ptIdx="+ptIdx,
 			method:"POST",
 			dataType:"text",
 			success:function(data){
@@ -800,7 +801,7 @@ function removePlanParticipant(){
 	var ptIdx = $('#pIdx').text();
 	if(confirm('참여를 취소 하시겠습니까?')){
 		$.ajax({
-			url:getContextPath()+"/plan/planParticipantRemove",
+			url:"../plan/planParticipantRemove",
 			method:"POST",
 			dataType:"text",
 			success:function(data){
@@ -818,3 +819,58 @@ function removePlanParticipant(){
 		
 	}
 }
+function addInputTrFoodCost(){
+	if($('#detailSchedule').children('#inputlist').text().length>6){
+		alert('상세 일정 입력 창을 등록/제거해주세요');
+	}else if($('#sumTransCost').children('#inputlist').text().length>6){
+		alert('교통비용 입력창을 등록/제거해주세요')
+	}else{
+		//날짜 연산용
+		var sdateArray = $('#spanSdate').html().split("-");
+		var sdate = new Date(sdateArray[0], Number(sdateArray[1])-1, sdateArray[2]);
+		var edateArray = $('#spanEdate').html().split("-");
+		var edate = new Date(edateArray[0], Number(edateArray[1])-1, edateArray[2]);
+		var period = (edate.getTime() - sdate.getTime())/1000/60/60/24;
+		var ptIdx = $('#pIdx').text();
+		var selectBox = '<select class="form-control detailInput" name="planFoodCosts['+inputCntFoodCost+'].psDate">';
+		for (var i = 1; i <= period+1; i++) {
+			selectBox += '<option value="'+i+'">제'+i+'일차</option>';
+		}
+		selectBox += '</select>';
+		$('#foodCost > #inputlist:last').append(	'<tr><td id="psDateTd">'+selectBox+'</td>'+
+				'<td id="pfcTimeTd"><input class="form-control detailInput" type="time" name="planFoodCosts['+inputCntFoodCost+'].pfcTime"></td>'+
+				'<td id="pfcContentTd"><input class="form-control detailInput" type="text" name="planFoodCosts['+inputCntFoodCost+'].pfcContent" placeholder="식비 내용 입력"></td>'+
+		        '<td id="pfcCostTd"><input class="form-control detailInput" type="text" name="planFoodCosts['+inputCntFoodCost+'].pfcCost" placeholder="비용 입력"></td>'+
+		        '<td id="pfcRemarkTd"><input class="form-control detailInput" type="text" name="planFoodCosts['+inputCntFoodCost+'].pfcRemark" placeholder="비고 입력"><span class="fa fa-times-circle-o removeInput" id="removeInput'+inputCntFoodCost+'" onclick="event.cancelBubble=true;"></td>'
+		        +'<input type="hidden" name="planFoodCosts['+inputCntFoodCost+'].ptIdx" value="'+ptIdx+'">'+'<tr>');
+		$('.detailInput').keyup(function(){
+			$('#messageDivForJS').show();
+			$('#messageDivForJS').html('현재 입력하는 내용 : <br>'+$(this).val());
+		})
+		$('#removeInput'+inputCntFoodCost).click(function(){
+			var thisTr = $(this).parent().parent('tr');
+			if(confirm('해당 등록창을 지우시겠습니까?')){
+				thisTr.remove();
+				foodCostSubmit();
+				inputCntFoodCost--;
+			}
+		})
+		inputCntFoodCost++;
+	}
+}
+function foodCostSubmit(){
+	if($('#foodCost').children('#inputlist').text().length>6){
+		$('#foodCostSubmit').fadeIn();
+	}else{
+		$('#foodCostSubmit').hide();
+		return false;
+	}
+}
+$(document).ready(function(){
+	$('#addFoodCost').click(function(){
+		addInputTrFoodCost();
+	})
+})
+$(document).click(function(){
+	foodCostSubmit();
+})

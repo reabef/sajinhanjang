@@ -25,6 +25,8 @@ public class MemberController {
 	
 	private Logger log = Logger.getLogger(MemberController.class);
 	
+	private String contextPath = "tourplannerbyreabef-env.ap-northeast-2.elasticbeanstalk.com";
+	
 	@Autowired
 	private MemberService memberService; 
 	
@@ -53,22 +55,22 @@ public class MemberController {
 	@RequestMapping(value="join", method=RequestMethod.POST)
 	private String join(RedirectAttributes attr, HttpServletRequest request, Member m){
 		String referer = request.getHeader("referer");
-		String contextPath = request.getContextPath();
+		String contextPath=request.getContextPath();
 		String referView = referer.split(contextPath)[1];
 		log.debug("이름 : " +m.getName());
 		int iv = memberService.joinMember(m);
-		/*if(iv>0){
+		if(iv>0){
 			attr.addAttribute("message", "회원가입에 성공하였습니다.");
 		}else{
 			attr.addAttribute("message", "회원가입에 실패하였습니다.");
-		}*/
+		}
 		return "redirect:"+referView;
 	}
 	
 	@RequestMapping(value="login", method=RequestMethod.POST)
 	private String login(HttpServletRequest request, RedirectAttributes attr, Member m){
 		String referer = request.getHeader("referer");
-		String contextPath = request.getContextPath();
+		String contextPath=request.getContextPath();
 		String referView = referer.split(contextPath)[1];
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -88,10 +90,11 @@ public class MemberController {
 	@RequestMapping(value="logout", method=RequestMethod.GET)
 	private String logout(HttpServletRequest request){
 		String referer = request.getHeader("referer");
-		String contextPath = request.getContextPath();
+		String contextPath=request.getContextPath();
 		String referView = referer.split(contextPath)[1];
 		
 		request.getSession().removeAttribute("mid");
+		log.debug("이전 페이지 : "+referView);
 		return "redirect:"+referView;
 	}
 }

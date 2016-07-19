@@ -5,7 +5,7 @@
 $(document).ready(function(){
 	var ptIdx = $('#pIdx').text();
 	$.ajax({
-		url:getContextPath()+"/plan/planParticipantGet?ptIdx="+ptIdx,
+		url:"../plan/planParticipantGet?ptIdx="+ptIdx,
 			method:"POST",
 			dataType:"text",
 			success:function(data){
